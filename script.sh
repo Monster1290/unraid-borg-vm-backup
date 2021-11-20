@@ -3,7 +3,7 @@
 #arrayStarted=true
 #noParity=true
 
-# v0.1.0
+# v0.1.1
 
 # what is the scripts' official name.
 official_script_name="script"
@@ -72,7 +72,7 @@ archive_dry_run="0"
 prune_dry_run="0"
 
 # default is 0. 0 means that backups will be creating infinitely. set this to 1 if you want to prune (remove) old backups based on prune parameters listed below. be careful in adjusting pruning parameters and read this description entirely. for example keep_last_n = 1 means that one archive of each vm will be kept. pruning applies to each vm independently based on it's UUID (you can find that value in advanced view of a vm or using 'virsh domuuid VM_NAME' command). For example, you have two vms with different names, different UUID's and option keep_last_n set to 1, then in the repo will be one archive of each vm, 2 in total. if keep_last_n=2, then accordingly there will be two archives of each vm, 4 archives in total. IMPORTANT NOTE: if you create a new vm with the same name, it will be treated as another vm in prune logic. so in case you creating a copy, make sure to copy UUID as well.
-enable_prune="1"
+enable_prune="0"
 
 # default is empty. specify this value to keep all archives within specified period of time. this is not vm based option, even if its applied to each vm independently. archives affected by this parameter will not be affected by any other prune parameter. value format is "<int><char>", where <char> one of ('H'- hour, 'd' - day, 'w' - week, 'm' - month, 'y' - year). for example value "1w" will keep all archives for 7 last days.
 keep_within=""
