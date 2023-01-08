@@ -6,21 +6,30 @@ This script creates archives of a selected vm's to a borg repository. Each archi
 
 To quickly start using this script follow this steps:
 
-1. Install from Community Applications plugin "NerdPack GUI".
-2. Install from Community Applications plugin "User Scripts".
-3. Go to Settings -> Nerd Pack and search for "borgbackup" package.
-4. Togпle ON right button next to package name and click "Apply" button. This will install "borgbackup" package to your UnRAID server.
-5. Go to shell and create your borg repository by executing `borg init -e repokey PATH`, where `PATH` is a path to location where you wanna store backups. It can be local share path or remote server accessible via SSH (borg must be installed on a remote server too).
-6. Enter password for borg repository. It can be empty.
-7. Go to Settings -> User Scripts and click "Add new script". Name new script, then edit created script, copy contest of the file "Script" to the text view.
-8. Modify following script options:
+1. Install from Community Applications plugin "User Scripts".
+2. Install borg utility using this shell script:
+```bash
+mkdir /boot/bin
+wget -O /boot/bin/borg https://github.com/borgbackup/borg/releases/download/1.2.3/borg-linux64
+cp /boot/bin/borg /usr/local/bin/
+chmod 755 /usr/local/bin/borg
+printf "\ncp /boot/bin/* /usr/local/bin\nchmod 755 /usr/local/bin/*" >> /boot/config/go
+```
+  * Download borg standalone binary from github releases [page](https://github.com/borgbackup/borg/releases). You need binary named `borg-linux64`.
+  * Put binary to your boot drive `/boot/bin/` and `/usr/local/bin/`.
+  * Make binary executable in `/usr/local/bin/`.
+  * Create script to copy binary at server startup from `/boot/bin/` to `/usr/local/bin`.
+3. Using shell create your borg repository by executing `borg init -e repokey PATH`, where `PATH` is a path to location where you wanna store backups. It can be local share path or remote server accessible via SSH (borg must be installed on a remote server too).
+4. Enter password for borg repository. It can be empty.
+5. Go to webGUI Settings -> User Scripts and click "Add new script". Name new script, then edit created script, copy contest of the file "Script" to the text view.
+6. Modify following script options:
   * `enabled` set to 1
   * `BORG_REPO` set to repository path specified in step 5.
   * `BORG_PASSPHRASE` set to password specified in step 6.
   * `vms_to_backup` paste vm names that you wanted to backup. Alternatively you can set `backup_all_vms` to 1, to create backups for all vms.
   * `logs_folder` set to folder where you wanna store log files
-9. Click "Save changes".
-10. Specify schedule for the script.
+7. Click "Save changes".
+8. Specify schedule for the script.
 
 First vm backup can take some time, depending on: overall vdisks size and sequential read/write speeds of your drives or network speed (in case of remote backup).
 
